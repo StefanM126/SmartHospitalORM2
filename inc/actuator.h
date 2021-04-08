@@ -7,8 +7,10 @@ class Actuator{
     char value_m;
 
     char charPtrToChar(char *value);
+
 public:
     Actuator();
+    Actuator(Actuator& a);
     void writeActuator(char *value);
 };
 

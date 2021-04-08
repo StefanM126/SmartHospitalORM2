@@ -6,7 +6,7 @@ void Subscriber::on_connect(int rc) {
         exit(1);
     }
 
-    if(rc = subscribe(NULL, topic_m)) {
+    if((rc = subscribe(NULL, topic_m)) != 0) {
         std::cout << "Error with result code: " << rc << std::endl;
         exit(1);
     }
@@ -16,7 +16,7 @@ void Subscriber::on_connect(int rc) {
 
 void Subscriber::on_message(const struct mosquitto_message *msg) {
     std::cout << "New message with topic" << msg->topic << ": " << (char*) msg->payload << std::endl;
-    actuator_m.writeActuator((char*) msg->payload);
+    //actuator_m.writeActuator((char*) msg->payload);
 }
 
 void Subscriber::on_disconnect(int rc) {
@@ -27,7 +27,8 @@ void Subscriber::on_disconnect(int rc) {
     
     std::cout << "Disconnected" << std::endl;
 }
-Subscriber::Subscriber(const char* host, const char* id, const char* topic, int port, int keepalive, Actuator &actuator) {
+
+Subscriber::Subscriber(const char* host, const char* id, const char* topic, int port, int keepalive, Actuator &actuator) : actuator_m(actuator) {
 
     mosqpp::lib_init();
 
@@ -36,7 +37,6 @@ Subscriber::Subscriber(const char* host, const char* id, const char* topic, int 
     topic_m = topic;
     port_m = port;
     keepalive_m = keepalive;
-    actuator_m = actuator;
 
     connect_async(host, port, keepalive);
     loop_start();
