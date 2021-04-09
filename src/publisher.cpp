@@ -22,12 +22,13 @@ void Publisher::on_disconnect(int rc) {
     } 
 }
 void Publisher::on_publish(int mid) {
+    std::unique_lock<std::mutex> lock(mx);
     std::cout << "Publisher with id: "<< id_m << " published on topic: " << topic_m <<  " mid = " << mid << std::endl;
 }
 
-bool Publisher::pubSensor(Sensor &s, int sec){
+bool Publisher::pubSensor(int sec){
     int ret;
-    while((ret = publish(NULL, topic_m, strlen(s.readSensor()), s.readSensor()) == 0)) {
+    while((ret = publish(NULL, topic_m, strlen(sensor_m.readSensor()), sensor_m.readSensor()) == 0)) {
         std::unique_lock<std::mutex> lock(mx);
         std::this_thread::sleep_for(std::chrono::seconds(sec));            
     }
@@ -37,7 +38,7 @@ bool Publisher::pubSensor(Sensor &s, int sec){
     return true;
 }
 
-Publisher::Publisher(const char* host, const char* id, const char* topic, int port, int keepalive) {
+Publisher::Publisher(const char* host, const char* id, const char* topic, int port, int keepalive, Sensor &sensor) : sensor_m(sensor) {
     mosqpp::lib_init();
 
     host_m = host;

@@ -15,8 +15,9 @@ void Subscriber::on_connect(int rc) {
 }
 
 void Subscriber::on_message(const struct mosquitto_message *msg) {
-    std::cout << "New message with topic" << msg->topic << ": " << (char*) msg->payload << std::endl;
-    //actuator_m.writeActuator((char*) msg->payload);
+    std::unique_lock<std::mutex> lock(mx);
+    std::cout << "New message with topic " << msg->topic << ": " << (char*) msg->payload << std::endl;
+    actuator_m.writeActuator((char*) msg->payload);
 }
 
 void Subscriber::on_disconnect(int rc) {

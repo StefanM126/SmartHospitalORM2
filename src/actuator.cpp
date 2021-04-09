@@ -11,13 +11,14 @@ void Actuator::writeActuator(char *value) {
     value_m = charPtrToChar(value); 
 }
 
-char Actuator::charPtrToChar(char* value) {
-    char ret = 0;
+unsigned char Actuator::charPtrToChar(char* value) {
+    unsigned char ret = 0;
     int i = 0;
 
     while (value[i] != '\0') {
         ret *= 10;
         ret += value[i] - '0';
+        i++;
     }
     return ret;
 }
