@@ -15,6 +15,7 @@ class Publisher : public mosqpp::mosquittopp {
     const char* topic_m;
     int port_m;
     int keepalive_m;
+    Sensor sensor_m;
     std::mutex mx;
 
     void on_connect(int rc);
@@ -22,8 +23,8 @@ class Publisher : public mosqpp::mosquittopp {
     void on_publish(int mid);
 
 public:
-    bool pubSensor(Sensor &s, int sec);
-    Publisher(const char* host, const char* id, const char* topic, int port, int keepalive);
+    bool pubSensor(int sec);
+    Publisher(const char* host, const char* id, const char* topic, int port, int keepalive, Sensor &sensor);
     ~Publisher();
 };
 

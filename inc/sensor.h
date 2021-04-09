@@ -5,11 +5,12 @@
 #include<cstdlib>
 
 class Sensor{
-    char value_m;
+    unsigned char value_m;
 
-    char* charToCharPtr(char value);
+    char* charToCharPtr(unsigned char value);
 public:
     Sensor();
+    Sensor(Sensor &s);
     char* readSensor();
 };
 

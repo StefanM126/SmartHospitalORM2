@@ -4,9 +4,9 @@
 #include<iostream>
 
 class Actuator{
-    char value_m;
+    unsigned char value_m;
 
-    char charPtrToChar(char *value);
+    unsigned char charPtrToChar(char *value);
 
 public:
     Actuator();

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
+#include <mutex>
 #include <mosquittopp.h>
 #include "actuator.h"
 
@@ -15,6 +16,7 @@ class Subscriber : public mosqpp::mosquittopp {
     int port_m;
     int keepalive_m;
     Actuator actuator_m;
+    std::mutex mx;
 
     void on_connect(int rc);
     void on_disconnect(int rc);
