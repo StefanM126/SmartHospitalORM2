@@ -1,8 +1,8 @@
 CC       = g++
 LIBS     = -lmosquittopp
-CXXFLAGS = -g -Wall -c -I../inc
-
 IDIR = ../inc
+CXXFLAGS = -g -Wall -c -I${IDIR}
+
 ODIR = ../obj
 SDIR = src
 

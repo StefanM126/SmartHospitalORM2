@@ -1,0 +1,17 @@
+{
+    "clients" : [
+        {
+            "type" : "actuator",
+            "attribute" : "light"
+        }, 
+        {
+            "type" : "sensor",
+            "attribute" : "temperature"
+        },
+        {
+            "type" : "actuator",
+            "attribute" : "motion"
+        } 
+    
+    ]
+} 
