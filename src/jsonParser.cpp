@@ -16,10 +16,10 @@ JsonParser::JsonParser(std::string filename) {
         if (!ok) {
             exit(1);
         }
-            
+
     }
 }
-    
+
 std::string ClientClass::getType() {
 	return type;
 }
@@ -27,20 +27,20 @@ std::string ClientClass::getType() {
 std::string ClientClass::getAttribute() {
 	return attribute;
 }
-
+ClientClass::ClientClass() : JsonParser() {}
 ClientClass::ClientClass(std::string filename) : JsonParser(filename) {
     type = value["type"].asString();
     attribute = value["attribute"].asString();
-} 
-
-ClientClass::ClientClass(std::string type, std::string attribute) {
-   this->type = type; 
-   this->attribute = attribute; 
 }
 
-bool ClientClass::operator==(const ClientClass& other) { 
+ClientClass::ClientClass(std::string type, std::string attribute) {
+   this->type = type;
+   this->attribute = attribute;
+}
+
+bool ClientClass::operator==(const ClientClass& other) {
     return other.type == this->type && other.attribute == this->attribute;
-}    
+}
 
 std::ostream& operator<<(std::ostream& os, const ClientClass& c) {
 	os << "Type: " << c.type << std::endl;
@@ -54,7 +54,10 @@ ControllerClass::ControllerClass(std::string filename) : JsonParser(filename) {
         ClientClass c(value["clients"][i]["type"].asString(), value["clients"][i]["attribute"].asString());
         clients.push_back(c);
     }
-} 
+}
+
+ControllerClass::ControllerClass() : JsonParser() {}
+
 
 std::list<ClientClass> ControllerClass::getClients() {
 	return clients;

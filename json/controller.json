@@ -1,0 +1,43 @@
+{
+    "clients" : [
+        {
+            "type" : "actuator",
+            "attribute" : "light"
+        },
+        {
+            "type" : "actuator",
+            "attribute" : "blinds"
+        },
+        {
+            "type" : "actuator",
+            "attribute" : "door"
+        },
+        {
+            "type" : "actuator",
+            "attribute" : "temperature"
+        },
+
+        {
+            "type" : "actuator",
+            "attribute" : "motion"
+        },
+        {
+            "type" : "sensor",
+            "attribute" : "door"
+        },
+        {
+            "type" : "sensor",
+            "attribute" : "light"
+        },
+        {
+            "type" : "sensor",
+            "attribute" : "temperature"
+        },
+        {
+            "type" : "controller",
+            "attribute" : "controller"
+        }
+
+
+    ]
+}

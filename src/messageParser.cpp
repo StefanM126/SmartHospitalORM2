@@ -34,12 +34,21 @@ void Message::setSenderId(std::string senderId) {
 bool ClientMessage::parse(std::string msg) {
     receiverId = parseOne(msg);
     senderId = parseOne(msg);
-    
-    if (msg == "") 
-        return false;
 
-    type = parseOne(msg);
+
+    std::string msgType = parseOne(msg);
+
+
+    if (msgType == "Alive"){
+        return false;
+      }
+
+
+    type = msgType;
+
     purpose = parseOne(msg);
+
+
     return true;
 }
 
@@ -62,13 +71,13 @@ void ClientMessage::setPuropse(std::string purpose) {
 bool ControllerMessage::parse(std::string msg) {
         receiverId         = parseOne(msg);
         senderId           = parseOne(msg);
-        std::string stat   = parseOne(msg); 
+        std::string stat   = parseOne(msg);
 
     if(stat.compare("OK") == 0) {
         state = OK;
         brokerIP           = parseOne(msg);
 
-        std::string keepAl = parseOne(msg); 
+        std::string keepAl = parseOne(msg);
         std::stringstream str(keepAl);
         str >> keepAlive;
     }
@@ -77,7 +86,7 @@ bool ControllerMessage::parse(std::string msg) {
         brokerIP = "";
         keepAlive = 0;
     }
-    else {
+    else if(stat.compare("NOK") == 0){
         state = NOK;
         brokerIP = "";
         keepAlive = 0;
@@ -86,7 +95,7 @@ bool ControllerMessage::parse(std::string msg) {
 }
 
 ControllerMsgState ControllerMessage::getState() {
-    return state; 
+    return state;
 }
 
 
@@ -95,7 +104,7 @@ std::string ControllerMessage::getBrokerIP() {
 }
 
 int ControllerMessage::getKeepAlive() {
-    return keepAlive; 
+    return keepAlive;
 }
 
 void ControllerMessage::setBrokerIP(std::string brokerIP) {
@@ -109,4 +118,3 @@ void ControllerMessage::setState(ControllerMsgState state) {
 void ControllerMessage::setKeepAlive(int keepAlive) {
     this->keepAlive = keepAlive;
 }
-

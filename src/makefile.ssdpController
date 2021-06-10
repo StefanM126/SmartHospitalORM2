@@ -1,0 +1,26 @@
+IDIR =../inc
+CC=g++
+CFLAGS=-ggdb -I$(IDIR) -Wall -lpthread -lmosquitto
+
+ODIR=../obj
+LDIR =../lib
+
+LIBS=-lm
+
+_DEPS = messageParser.h jsonParser.h json.h ssdpController.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+_OBJ = messageParser.o jsonParser.o jsoncpp.o ssdpControllerMain.o ssdpController.o
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+
+
+$(ODIR)/%.o: %.cpp $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+ssdpController: $(OBJ)
+	$(CC) -o ../exe/$@ $^ $(CFLAGS) $(LIBS)
+
+.PHONY: clean
+
+clean:
+	rm -f ../exe/ssdpController $(ODIR)/*.o *~ core $(INCDIR)/*~

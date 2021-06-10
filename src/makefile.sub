@@ -5,7 +5,7 @@ CC=g++
 # compiler flags:
 # -g    adds debugging information to the executable file
 # -Wall turns on most, but not all, compiler warnings
-CFLAGS=-ggdb -I$(IDIR) -Wall -lpthread
+CFLAGS=-ggdb -I$(IDIR) -Wall -lpthread -lmosquitto
 
 ODIR=../obj
 LDIR =../lib
@@ -14,10 +14,10 @@ LDIR =../lib
 # Use the -llibname option (this will link in libm.so)
 LIBS=-lm
 
-_DEPS = messageParser.h jsonParser.h json.h
+_DEPS = messageParser.h jsonParser.h json.h ssdpClient.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = client.o messageParser.o jsonParser.o jsoncpp.o
+_OBJ = ssdpClient.o messageParser.o jsonParser.o jsoncpp.o mqttSub.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 # The -c flag says to generate the object file
@@ -26,8 +26,8 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 # The $< is the first item in the dependencies list, and the CFLAGS macro is defined above
 
 # the build target executable:
-client: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+sub: $(OBJ)
+	$(CC) -o ../exe/$@ $^ $(CFLAGS) $(LIBS)
 
 $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -41,4 +41,4 @@ $(ODIR)/%.o: %.cpp $(DEPS)
 # removes the executable file, as well as old .o object
 # files and *~ backup files:
 clean:
-	rm -f client $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm -f ../exe/sub $(ODIR)/*.o *~ core $(INCDIR)/*~
